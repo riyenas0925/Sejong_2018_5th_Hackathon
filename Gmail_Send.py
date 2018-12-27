@@ -3,78 +3,82 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import requests
 from bs4 import BeautifulSoup
+from time import sleep
 
-user = 'swnotice01@gmail.com'
-password = 'interface518'
+k = 0
 
-student = ['riyenas0925@gmail.com', 'rlagksml99@gmail.com','nhk9680@gmail.com']
+while(True):
+    user = 'swnotice01@gmail.com'
+    password = 'interface518'
 
-def gmail_send(user, to, subject, text):
+    student = ['riyenas0925@gmail.com', 'rlagksml99@gmail.com','nhk9680@gmail.com']
 
-    msg = MIMEMultipart()
-    msg['From'] = user
-    msg['To'] = to
-    msg['Subject'] = subject
-    msg.attach(MIMEText(text))
+    def gmail_send(user, to, subject, text):
 
-    mailServer = smtplib.SMTP('smtp.gmail.com', 587)
-    mailServer.ehlo()
-    mailServer.starttls()
-    mailServer.ehlo()
-    mailServer.login(user, password)
+        msg = MIMEMultipart()
+        msg['From'] = user
+        msg['To'] = to
+        msg['Subject'] = subject
+        msg.attach(MIMEText(text))
 
-    for n in range(3):
-        mailServer.sendmail(user, student[n], msg.as_string())
+        mailServer = smtplib.SMTP('smtp.gmail.com', 587)
+        mailServer.ehlo()
+        mailServer.starttls()
+        mailServer.ehlo()
+        mailServer.login(user, password)
 
-    mailServer.close()
+        for n in range(3):
+            mailServer.sendmail(user, student[n], msg.as_string())
+
+        mailServer.close()
 
 
-# 홈페이지
+    # 홈페이지
 
-contents = []
-writers = []
+    contents = []
+    writers = []
 
-req_list = requests.get('http://board.sejong.ac.kr/boardlist.do?bbsConfigFK=333')
+    req_list = requests.get('http://board.sejong.ac.kr/boardlist.do?bbsConfigFK=333')
 
-html_list = req_list.text
-soup_list = BeautifulSoup(html_list, 'html.parser')
+    html_list = req_list.text
+    soup_list = BeautifulSoup(html_list, 'html.parser')
 
-names = soup_list.select('a')
-indexes = soup_list.find_all('td', {'class': 'index'})
+    names = soup_list.select('a')
+    indexes = soup_list.find_all('td', {'class': 'index'})
 
-names = names[:10]
+    names = names[:10]
 
-for n in names:
-    # print(n.get_text()
-    test = n.get('href')
+    for n in names:
+        # print(n.get_text()
+        test = n.get('href')
 
-    req_content = requests.get('http://board.sejong.ac.kr' + test)
-    # print(req_content)
-    html_content = req_content.text
+        req_content = requests.get('http://board.sejong.ac.kr' + test)
+        # print(req_content)
+        html_content = req_content.text
 
-    # print(test2)
+        # print(test2)
 
-    soup_content = BeautifulSoup(html_content, 'html.parser')
+        soup_content = BeautifulSoup(html_content, 'html.parser')
 
-    contents_temp = soup_content.find_all('td', {'class': 'content'})
-    writers_temp = soup_content.find_all('td', {'class': 'writer'})
+        contents_temp = soup_content.find_all('td', {'class': 'content'})
+        writers_temp = soup_content.find_all('td', {'class': 'writer'})
 
-    contents.append(contents_temp[0])
-    writers.append(writers_temp[0])
+        contents.append(contents_temp[0])
+        writers.append(writers_temp[0])
 
-    #print(contents)
+        #print(contents)
 
-    '''
-    for m in contents:
-        print(m.get_text())
-    '''
+        '''
+        for m in contents:
+            print(m.get_text())
+        '''
 
-n = 5
+    print(names[k].get_text())
+    print(writers[0].get_text())
+    print(contents[k].get_text())
 
-'''
-print(names[n].get_text())
-print(writers[n].get_text())
-print(contents[n].get_text())
-'''
+    gmail_send(user, writers[0].get_text(), indexes[k].get_text() + names[k].get_text(), contents[k].get_text())
 
-gmail_send(user, writers[0].get_text(), indexes[n].get_text() + names[n].get_text(), contents[n].get_text())
+    print('전송했다아아ㅏㅏㅏ')
+
+    sleep(10)
