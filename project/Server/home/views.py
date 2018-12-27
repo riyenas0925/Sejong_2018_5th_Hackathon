@@ -78,17 +78,16 @@ def list(request):
 
     newindex = atoi(indexes[0].get_text())
 
+    print("newindex: ", newindex)
     repeatnum=newindex-lastindex
 
     if(repeatnum!=0):
-        for i in range(repeatnum + 1):
-            k=repeatnum-i
+        for i in range(repeatnum):
+            k=repeatnum-i-1
             gmail_send(admin_user, writers[0].get_text(), names[k].get_text(), contents[k].get_text())
 
-            print('test')
-
         admins.update(lastindex=newindex)
-
+        print('lastindex: ', lastindex)
     context = {'users': users, 'admins': admins,}
 
     return render(request, 'home/list.html', context)
