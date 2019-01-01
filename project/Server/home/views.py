@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import User
 from .models import Admin
+import time
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -15,6 +16,8 @@ from django.http import HttpResponseRedirect
 # Create your views here.
 
 def list(request):
+    start_time = time.time()
+
     users = User.objects.all()
     admins = Admin.objects.all()
 
@@ -88,6 +91,7 @@ def list(request):
     newindex = atoi(indexes[0].get_text())
 
     print("newindex: ", newindex)
+
     repeatnum=newindex-lastindex
 
     if(repeatnum!=0):
@@ -99,6 +103,7 @@ def list(request):
         print('lastindex: ', lastindex)
     context = {'users': users, 'admins': admins,}
 
+    print("--- 전송시간 %s seconds ---" % (time.time() - start_time))
     return render(request, 'home/list.html', context)
 
 
