@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<head>
+<title></title>
+<style>
+
+    button:hover{
+
+        cursor: pointer;
+    }
+    a {
+
+        color: rgb(59,89,152);
+        font-size: 12px;
+        float: left;
+        text-decoration: none;
+    }
+
+    a:hover{
+        cursor:pointer;
+        color:rgb(221,75,57);
+    }
+    a: visited{
+        color: black;
+    }
+    a: link{
+        color: black;
+
+    }
+</style>
+</head>
+<body style="text-align:center;background-color: rgb(210,214,222)">
+
+    <p style="margin-top: 100px;font-size: 30px; font-weight: bolder; ">Sejong Notice System</p>
+
+
+
+    <div style="margin-top: 20px; text-align: center;display: inline-block;background-color: white;center; width: 500px; height: 700px;">
+
+
+        <p style="font-size: 45px; font-weight: bolder;">Sign up</p>
+
+        <div style="display: inline-block; background-color: ; width: 360px;">
+
+
+
+        <form action="signup" method="POST" />
+
+    {% csrf_token %}
+        <input type="text" name="name" style="width: 370px; height: 50px; padding-left:10px; font-size: 20px; "placeholder="name"/><br><br>
+        <input type="text" name="studentid"  style="width: 370px; height: 50px; padding-left:10px; font-size: 20px; "placeholder="id"/><br><br>
+        <input type="text" name="email"  style="width: 370px; height: 50px; padding-left:10px; font-size: 20px; "placeholder="mail-address"/><br><br>
+        <input type="text" name="password"  style="width: 370px; height: 50px; padding-left:10px; font-size: 20px; " placeholder="password" /><br><br><br>
+
+        <input type="submit" value="send" style="color: white;background-color: rgb(59,89,152);border: 0px; width: 200px; height: 50px;font-size: 30px"/>
+
+
+        <br clear="both">
+        </form>
+        </div>
+<br><br><br>
+        <p style="font-size: 10px; ">
+        <img src="data/sejong.jpg" width="70px" height ="70px"><br>
+        Copyright&copySejongUniv.DJ_ango
+        </p>
+    </div>
+    </div>
+
+</body>
+
+</html>

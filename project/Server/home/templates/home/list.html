@@ -38,12 +38,14 @@
                         <tr style="">
                           <th style="text-align: center">이메일</th>
                           <th style="text-align: center">비밀번호</th>
+                          <th style="text-align: center">남은 전송횟수</th>
                         </tr>
 
                         {% for admin in admins%}
                         <tr>
                           <td class="tname" style="font-weight:bold;text-align:center;">{{admin.email}}</td>
                           <td class="tid" style="font-weight:bold;text-align:center;">{{admin.password}}</td>
+                          <td class="tpercent" style="font-weight:bold;text-align:center;">{{admin.cnt}}</td>
                         </tr>
                         {% endfor %}
                       </table>

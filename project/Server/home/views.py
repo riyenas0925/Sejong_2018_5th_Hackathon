@@ -8,6 +8,9 @@ import requests
 from bs4 import BeautifulSoup
 from time import sleep
 from locale import atoi
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+
 
 # Create your views here.
 
@@ -18,6 +21,7 @@ def list(request):
     for admin_db in admins:
         admin_user = admin_db.email
         admin_password = admin_db.password
+        admin_cnt = admin_db.cnt
         lastindex = admin_db.lastindex
 
     student = []
@@ -40,8 +44,13 @@ def list(request):
         mailServer.ehlo()
         mailServer.login(admin_user, admin_password)
 
+        t = 0
+
         for user_send in users:
             mailServer.sendmail(admin_user, user_send.email, msg.as_string())
+            t = t + 1
+
+        admins.update(cnt = admin_cnt - t * repeatnum)
 
         mailServer.close()
 
@@ -91,3 +100,18 @@ def list(request):
     context = {'users': users, 'admins': admins,}
 
     return render(request, 'home/list.html', context)
+
+
+def signup(request):
+
+    p = User(name=request.POST.get('name'),
+             studentid=request.POST.get('studentid'),
+             email=request.POST.get('email'),
+             password=request.POST.get('password'))
+
+    p.save();
+
+    return HttpResponseRedirect('/');
+
+def prepare(request):
+    return render(request,'home/signup.html') #게시물 등록 화면이라 작성한 것

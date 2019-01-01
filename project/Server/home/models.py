@@ -5,9 +5,9 @@ from django.utils import timezone
 
 class User(models.Model):
     name = models.CharField(max_length=10)
-    studentid = models.IntegerField(max_length=8)
+    studentid = models.CharField(max_length=10)
     email = models.CharField(max_length=50)
-    password = models.IntegerField(max_length=20)
+    password = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -15,7 +15,8 @@ class User(models.Model):
 class Admin(models.Model):
     email = models.CharField(max_length=50)
     password = models.CharField(max_length=20)
-    lastindex = models.IntegerField(max_length=20)
+    lastindex = models.IntegerField(default=0)
+    cnt = models.IntegerField(default=500)
 
     def __str__(self):
         return self.email
